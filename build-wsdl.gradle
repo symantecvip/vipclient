@@ -1,0 +1,82 @@
+def WSDL2JAVA_GROUP = 'WSDL2JAVA' /* For grouping tasks*/
+def wsdlTaskNameTmpl = "createAndCompile"
+def wsdlTaskDescTmpl = "Convert str_to_replace to java and compile"
+
+configurations {
+    wsdl2java
+}
+
+
+dependencies {
+    wsdl2java       group: 'com.sun.xml.ws', name: 'jaxws-tools', version: "2.2.9-b14002"
+}
+
+def wsimport (sourceDestDir, destDir, packageName, wsdlFile, Closure identifySelf){
+
+    if(! file(sourceDestDir).exists())
+        file(sourceDestDir).mkdirs()
+    if(! file(destDir).exists())
+        file(destDir).mkdirs()	
+    ant.taskdef(
+                    classname:'com.sun.tools.ws.ant.WsImport', 
+                    name:'wsimport', 
+                    classpath: configurations.wsdl2java.asPath
+                              //'extras/lib/antTask/jaxws-tools.jar'
+               )
+    ant.wsimport (
+                    xendorsed: true,
+                    extension: true,
+                    keep: true,
+                    xdebug : false,
+                    verbose : 'no',
+                    destdir: destDir,
+                    package: packageName,
+                    sourcedestdir: sourceDestDir,
+                    wsdl: wsdlFile){
+                    produces(dir:destDir)
+                }
+    identifySelf()
+}
+
+project.ext.set('wsdlTasks' , [
+    [   name: "${wsdlTaskNameTmpl}"+'Auth_1_8',
+        dir: 'auth_1_8',
+        packageVersion: "${wsdl_package}"+'.'+'v_1_x', 
+        wsdlFolder: "${wsdl_dir}", 
+        wsdlName: 'vipuserservices-auth-1.8.wsdl'
+    ],
+    [   name: "${wsdlTaskNameTmpl}"+'Query_1_8',
+        dir: 'query_1_8',
+        packageVersion: "${wsdl_package}"+'.'+'v_1_x',
+        wsdlFolder: "${wsdl_dir}", 
+        wsdlName: 'vipuserservices-query-1.8.wsdl'
+    ],
+    [   name: "${wsdlTaskNameTmpl}"+'Mgmt_1_8',
+        dir: 'mgmt_1_8',
+        packageVersion: "${wsdl_package}"+'.'+'v_1_x', 
+        wsdlFolder: "${wsdl_dir}", 
+        wsdlName: 'vipuserservices-mgmt-1.8.wsdl'
+    ],
+    [   name: "${wsdlTaskNameTmpl}"+'Vip_Auth', 
+        dir: 'vip_auth', 
+        packageVersion: "${vips_client_package}", 
+        wsdlFolder: "${wsdl_dir}",
+        wsdlName: 'vip_auth.wsdl'
+    ] 
+])
+
+project.wsdlTasks.each { wsdlTask ->
+    project.task(wsdlTask.name) {
+        group = WSDL2JAVA_GROUP
+        def taskDesc = wsdlTaskDescTmpl.replace('str_to_replace',wsdlTask.wsdlName)
+        description = taskDesc
+        System.setProperty('javax.xml.accessExternalSchema', 'file')
+        doLast {
+            wsimport("${buildDir}"+'/'+"${wsdl_src}"+'/'+wsdlTask.dir,"${buildDir}"+'/'+"${wsdl_classes}"+'/'+wsdlTask.dir, 
+                    wsdlTask.packageVersion, wsdlTask.wsdlFolder+'/'+wsdlTask.wsdlName)
+                {
+                println(taskDesc+' -- completed')
+                }
+        }
+    }
+}

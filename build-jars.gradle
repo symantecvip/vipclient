@@ -1,0 +1,71 @@
+def JAR_GROUP = 'JAR' /* For grouping tasks*/
+
+project.ext.set('jarTasks' , [
+    [name: "vipuserservices-ws", 
+            from: ["${buildDir}"+'/'+"${wsdl_classes}"+'/auth_1_8',
+                   "${buildDir}"+'/'+"${wsdl_classes}"+'/mgmt_1_8',
+                   "${buildDir}"+'/'+"${wsdl_classes}"+'/query_1_8',
+                  ], 
+            pattern: '**/*.class', 
+            dependsOnTasks: ['createAndCompileAuth_1_8', 'createAndCompileQuery_1_8', 'createAndCompileMgmt_1_8']
+    ],
+    [name: "vipservices-auth-ws", 
+                from: "${buildDir}"+'/'+"${wsdl_classes}"+'/vip_auth', 
+                dependsOnTasks: ['createAndCompileVip_Auth']
+    ]/*,
+    [name: "vipservices-prov-ws", 
+                from: "${buildDir}"+'/'+"${wsdl_classes}"+'/vip_prov', 
+                dependsOnTasks: ['createAndCompileVip_Prov']
+    ]  */  
+])
+configurations {
+    localBuild
+}
+
+dependencies {
+    localBuild      group: 'vipus', name: 'vipuserservices-ws', version: "1.8"
+	localBuild      group: 'vips', name: 'vipservices-auth-ws', version: "1.0"
+    localBuild      group: 'vips', name: 'vipservices-prov-ws', version: "1.0"
+}
+
+compileJava {
+    if(System.getProperty("fastBuild") != null) {
+        println("*** fastBuild is set to be true. Skipping the WSDL/XML compilation steps.")
+    } else {
+        dependsOn 'compileGeneratedFiles'
+    }
+    classpath += configurations.localBuild
+}
+
+task compileGeneratedFiles {
+    group = JAR_GROUP
+    description = 'Jar all WSDL and XSD generated class files'
+    def dependsOnString = []
+    project.jarTasks.each { jarTask ->
+            dependsOnString.add(jarTask.name)
+    }
+    dependsOn dependsOnString
+    mustRunAfter clean
+}
+
+project.jarTasks.each { jarTask ->
+    project.task(jarTask.name, type: Jar) {
+        group = JAR_GROUP
+        description = sprintf('Creates %1$s from class files in %2$s', jarTask.name, jarTask.from)
+        if(jarTask.dependsOnTasks != null){
+            dependsOn jarTask.dependsOnTasks
+        }
+        baseName = jarTask.name
+        version = ''
+        from jarTask.from
+        if( jarTask.pattern != null)
+            include jarTask.pattern
+        doLast { 
+            println(sprintf('Created %1$s with files from %2$s', jarTask.name, jarTask.from instanceof String || jarTask.from instanceof GString? 
+                                                                                new File(jarTask.from).listFiles() == null ? 'File object of '+ jarTask.from +' returns null'
+                                                                                                : new File(jarTask.from).listFiles().toList()*.path 
+                                                                                : jarTask.from 
+                            ))
+        }
+    }
+}

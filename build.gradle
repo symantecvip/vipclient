@@ -1,0 +1,21 @@
+group 'com.symantec.vip'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+apply from: 'build-props.gradle'
+apply from:   'build-wsdl.gradle'
+apply from:   'build-jars.gradle'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    flatDir { dirs 'build/libs' }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

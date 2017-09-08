@@ -1,0 +1,8 @@
+ext {
+    // Most directoies are added with the "buildDir" at runtime.
+    wsdl_src = 'wsdl-src'
+	wsdl_classes = 'wsdl-classes'
+	wsdl_package = 'com.symantec.vipuc.ws'
+	wsdl_dir = 'src/main/resources/wsdl' 
+    vips_client_package = 'com.symantec.vips.ws'
+}
