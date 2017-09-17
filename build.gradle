@@ -22,7 +22,7 @@ configurations {
 
 dependencies {
     localBuild group: 'vipus', name: 'vipuserservices-ws', version: "1.8"
-    localBuild group: 'vips', name: 'vipservices-ws', version: "1.0"
+    localBuild group: 'vips', name: 'vipservices-auth-ws', version: "1.0"
     compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.1.4'
 
     compile configurations.localBuild
