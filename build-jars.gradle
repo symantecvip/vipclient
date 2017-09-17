@@ -12,11 +12,7 @@ project.ext.set('jarTasks' , [
     [name: "vipservices-auth-ws", 
                 from: "${buildDir}"+'/'+"${wsdl_classes}"+'/vip_auth', 
                 dependsOnTasks: ['createAndCompileVip_Auth']
-    ]/*,
-    [name: "vipservices-prov-ws", 
-                from: "${buildDir}"+'/'+"${wsdl_classes}"+'/vip_prov', 
-                dependsOnTasks: ['createAndCompileVip_Prov']
-    ]  */  
+    ] 
 ])
 configurations {
     localBuild
@@ -25,7 +21,6 @@ configurations {
 dependencies {
     localBuild      group: 'vipus', name: 'vipuserservices-ws', version: "1.8"
 	localBuild      group: 'vips', name: 'vipservices-auth-ws', version: "1.0"
-    localBuild      group: 'vips', name: 'vipservices-prov-ws', version: "1.0"
 }
 
 compileJava {

@@ -1,0 +1,80 @@
+:createAndCompileVip_Auth
+[ant:wsimport] parsing WSDL...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Generating code...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Compiling code...
+[ant:wsimport] 
+Convert vip_auth.wsdl to java and compile -- completed
+:vipservices-auth-ws
+Created vipservices-auth-ws with files from [/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/wsdl-classes/vip_auth/com]
+:createAndCompileAuth_1_8
+[ant:wsimport] parsing WSDL...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Generating code...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Compiling code...
+[ant:wsimport] 
+Convert vipuserservices-auth-1.8.wsdl to java and compile -- completed
+:createAndCompileMgmt_1_8
+[ant:wsimport] parsing WSDL...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Generating code...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Compiling code...
+[ant:wsimport] 
+Convert vipuserservices-mgmt-1.8.wsdl to java and compile -- completed
+:createAndCompileQuery_1_8
+[ant:wsimport] parsing WSDL...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Generating code...
+[ant:wsimport] 
+[ant:wsimport] 
+[ant:wsimport] Compiling code...
+[ant:wsimport] 
+Convert vipuserservices-query-1.8.wsdl to java and compile -- completed
+:vipuserservices-ws
+Created vipuserservices-ws with files from [/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/wsdl-classes/auth_1_8, /Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/wsdl-classes/mgmt_1_8, /Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/wsdl-classes/query_1_8]
+:compileGeneratedFiles
+:compileJava
+:processResources
+:classes
+:jar
+:assemble
+:compileTestJava
+:processTestResources UP-TO-DATE
+:testClasses
+:test
+
+com.symantec.vip.client.VipUserServiceClientTest > myGetServerTimeTest STANDARD_OUT
+    Creating proxy for URL: file:/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/resources/main/wsdl/vipuserservices-auth-1.8.wsdl and endpoint: https://userservices-auth.vip.symantec.com/vipuserservices/AuthenticationService_1_8
+    Creating SSLContext for key store /Users/shantanu_gattani/IdeaProjects/vipclientbofa/src/main/resources/certs/vip_cert.p12
+    SSLContext provider: SunJSSE version 1.8
+    Creating proxy for URL: file:/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/resources/main/wsdl/vipuserservices-auth-1.8.wsdl and endpoint: https://userservices-auth.vip.symantec.com/vipuserservices/AuthenticationService_1_8
+    Creating proxy for URL: file:/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/resources/main/wsdl/vipuserservices-query-1.8.wsdl and endpoint: https://userservices-auth.vip.symantec.com/vipuserservices/QueryService_1_8
+    Creating proxy for URL: file:/Users/shantanu_gattani/Work/SymantecVIPGitHub/vipclient/build/resources/main/wsdl/vipuserservices-query-1.8.wsdl and endpoint: https://userservices-auth.vip.symantec.com/vipuserservices/QueryService_1_8
+    Request using JH1
+    Trusting server with SubjectDN: CN=userservices-auth.vip.symantec.com, OU=Infrastructure Operations, O=Symantec Corporation, L=Mountain View, ST=California, C=US
+    VIP User Services status code: 0000 message: Success. Time taken: 1045ms.
+    ServerTime =2017-09-17T18:41:28.701Z
+    VIP User Services status code: 0000 message: Success. Time taken: 251ms.
+    ServerTime =2017-09-17T18:41:28.981Z
+    VIP User Services status code: 0000 message: Success. Time taken: 235ms.
+    ServerTime =2017-09-17T18:41:29.217Z
+:check
+:build
+
+BUILD SUCCESSFUL
+
+Total time: 1 mins 34.543 secs

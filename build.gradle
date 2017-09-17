@@ -16,6 +16,21 @@ repositories {
     flatDir { dirs 'build/libs' }
 }
 
+configurations {
+    localBuild
+}
+
 dependencies {
+    localBuild group: 'vipus', name: 'vipuserservices-ws', version: "1.8"
+    localBuild group: 'vips', name: 'vipservices-ws', version: "1.0"
+    compile group: 'com.sun.xml.ws', name: 'jaxws-rt', version: '2.1.4'
+
+    compile configurations.localBuild
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+test {
+    testLogging{
+        showStandardStreams = true
+    }
 }
